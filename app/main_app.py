@@ -124,6 +124,12 @@ class MainAppLayout(QDialog):
         gbf_battle_id = tools.image_to_string(
             img_id_inv, lang="eng", builder=builder)
         battle_id = str(gbf_battle_id).replace(":", "")
+        battle_id = battle_id.replace("-", "")
+        battle_id = battle_id.replace("(", "C")
+        battle_id = battle_id.replace("£", "E")
+        battle_id = battle_id.replace("G", "C")
+        battle_id = battle_id.replace("S", "5")
+        
         pyperclip.copy(battle_id)
         self.button_id_input.setText(battle_id)
     
