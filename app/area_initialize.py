@@ -2,12 +2,17 @@
 import os
 import sys
 import json
+import pathlib
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 import tkinter as tk
 
 json_path = '../setting/setting.json'
-SETTING_JSON = os.path.join(os.path.dirname(__file__), json_path)
+CURRENT = str(pathlib.Path().resolve())
+SETTING_JSON = str(pathlib.Path(CURRENT + json_path).resolve())
+# SETTING_JSON = os.path.join(os.path.dirname(__file__), json_path)
+# SETTING_JSON = os.path.join(
+#     os.path.abspath(__file__), json_path)
 
 with open(SETTING_JSON, 'r') as f:
     settig_json = json.load(f)

@@ -19,10 +19,13 @@ from multiprocessing import Process
 
 
 # ---- 設定ファイルの読み込み ----
-CURRENT = os.path.dirname(__file__)
+# CURRENT = os.path.dirname(__file__)
+# CURRENT = os.path.abspath(__file__)
+CURRENT = str(pathlib.Path().resolve())
 json_path = '../setting/setting.json'
 IMAGE_DIR = '../image'
-SETTING_JSON = os.path.join(CURRENT, json_path)
+# SETTING_JSON = os.path.join(CURRENT, json_path)
+SETTING_JSON = str(pathlib.Path(CURRENT + json_path).resolve())
 
 # インストール済のTesseractのパスを通す
 
@@ -110,7 +113,8 @@ class MainAppLayout(QDialog):
         y1 = settig_json["y1"]
         y2 = settig_json["y2"]
 
-        image_path = os.path.join(CURRENT, os.path.join(IMAGE_DIR, 'capture.png'))
+        # image_path = os.path.join(CURRENT, os.path.join(IMAGE_DIR, 'capture.png'))
+        image_path = str(pathlib.Path(CURRENT + IMAGE_DIR + 'capture.png').resolve())
         img = ImageGrab.grab(bbox=(x1, y1, x2, y2))
         img = img.resize((int(img.width * 3.5), int(img.height*3.5)))
         img.save(image_path, dpi=(300, 300))
@@ -129,7 +133,7 @@ class MainAppLayout(QDialog):
         battle_id = battle_id.replace("£", "E")
         battle_id = battle_id.replace("G", "C")
         battle_id = battle_id.replace("S", "5")
-        
+
         pyperclip.copy(battle_id)
         self.button_id_input.setText(battle_id)
     
