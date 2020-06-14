@@ -161,7 +161,7 @@ class MainAppLayout(QDialog):
         try:
             send_battle_id(battle_id)
         except:
-            pass
+            print('Failed Update Cell.........')
         # send_battle_id(battle_id)
 
 def main():
