@@ -158,11 +158,11 @@ class MainAppLayout(QDialog):
         救援IDをスプレッドシートに書き込む
         """
         battle_id = self.button_id_input.text()
-        # try:
-        #     send_battle_id(battle_id)
-        # except:
-        #     pass
-        send_battle_id(battle_id)
+        try:
+            send_battle_id(battle_id)
+        except:
+            pass
+        # send_battle_id(battle_id)
 
 def main():
     app = QApplication(sys.argv)
