@@ -7,7 +7,7 @@ import pathlib
 from PyQt5 import QtWidgets, QtCore, QtGui
 import tkinter as tk
 
-json_path = '../setting/setting.json'
+json_path = '../../setting/setting.json'
 CURRENT = str(pathlib.Path().resolve())
 SETTING_JSON = str(pathlib.Path(CURRENT + json_path).resolve())
 # SETTING_JSON = os.path.join(os.path.dirname(__file__), json_path)
@@ -75,10 +75,12 @@ def Initialize():
     window = MyWidget()
     window.show()
     app.aboutToQuit.connect(app.deleteLater)
-    # sys.exit(app.exec_())
-    app.exec_()
+    sys.exit(app.exec_())
+    # app.exec_()
     # os.remove("capture.png")
 
 
 if __name__ == "__main__":
+    # exe化したときにアプリが動かない問題
+    freeze_support()
     Initialize()

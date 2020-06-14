@@ -6,6 +6,7 @@
 import os
 import sys
 import json
+import configparser
 import pyocr
 import pyocr.builders
 import pyperclip
@@ -15,21 +16,28 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from area_initialize import *
+from send_id_to_gs import *
 from multiprocessing import Process
-
+from multiprocessing import freeze_support
 
 # ---- 設定ファイルの読み込み ----
 # CURRENT = os.path.dirname(__file__)
 # CURRENT = os.path.abspath(__file__)
 CURRENT = str(pathlib.Path().resolve())
-json_path = '../setting/setting.json'
-IMAGE_DIR = '../image'
+json_path = '../../setting/setting.json'
+config_path = '../../setting/config.ini'
+IMAGE_DIR = '../../image'
 # SETTING_JSON = os.path.join(CURRENT, json_path)
 SETTING_JSON = str(pathlib.Path(CURRENT + json_path).resolve())
 
 # インストール済のTesseractのパスを通す
 
-path_tesseract = "C:\\Program Files\\Tesseract-OCR"
+config = configparser.ConfigParser()
+CONFIG = str(pathlib.Path(CURRENT + config_path).resolve())
+config.read(CONFIG, encoding='utf-8')
+
+# path_tesseract = "C:\\Program Files\\Tesseract-OCR"
+path_tesseract = config.get('tesseract', 'tesseract')
 if path_tesseract not in os.environ["PATH"].split(os.pathsep):
     os.environ["PATH"] += os.pathsep + path_tesseract
 
@@ -50,6 +58,7 @@ class MainAppLayout(QDialog):
         self.button_initialize.clicked.connect(self.initialize_clicked)
 
         self.button_gs = QPushButton('Spread sheet')
+        self.button_gs.clicked.connect(self.gs_clicked)
         self.button_copy = QPushButton("Copy")
         self.button_copy.clicked.connect(self.copy_clicked)
         self.button_ocr = QPushButton('Get ID')
@@ -144,11 +153,23 @@ class MainAppLayout(QDialog):
         text_box_id = self.button_id_input.text()
         pyperclip.copy(text_box_id)
 
+    def gs_clicked(self):
+        """
+        救援IDをスプレッドシートに書き込む
+        """
+        battle_id = self.button_id_input.text()
+        # try:
+        #     send_battle_id(battle_id)
+        # except:
+        #     pass
+        send_battle_id(battle_id)
+
 def main():
     app = QApplication(sys.argv)
     main_window = MainAppLayout()
     main_window.show()
-    app.exec_()
+    # app.exec_()
+    sys.exit(app.exec_())
 
 def start_app():
     app = Process(target=main)
@@ -156,4 +177,6 @@ def start_app():
 
 
 if __name__ == "__main__":
+    # exe化したときにアプリが動かない問題
+    freeze_support()
     start_app()
