@@ -142,6 +142,12 @@ class MainAppLayout(QDialog):
         battle_id = battle_id.replace("£", "E")
         battle_id = battle_id.replace("G", "C")
         battle_id = battle_id.replace("S", "5")
+        battle_id = battle_id.replace("i", "1")
+        battle_id = battle_id.replace("I", "1")
+        battle_id = battle_id.replace(">", "")
+        battle_id = battle_id.replace("φ", "0")
+        battle_id = battle_id.replace("Φ", "0")
+        
 
         pyperclip.copy(battle_id)
         self.button_id_input.setText(battle_id)
