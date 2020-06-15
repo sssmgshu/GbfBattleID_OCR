@@ -54,14 +54,6 @@ def send_battle_id(battle_id):
 
     print('cell updated!')
 
-# def test():
-#     config_file = CONFIG_DIR + 'config.ini'
-#     config_path = str(pathlib.Path(CURRENT + config_file).resolve())
-#     print(CURRENT)
-#     print(config_path)
-#     # read_ini_file()
-
-# test()
 if __name__ == "__main__":
     pass
 
